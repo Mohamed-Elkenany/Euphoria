@@ -10,7 +10,7 @@ async function Navbar() {
 
   return (
     <div className="max-md:pt-2 md:py-2 bg-white shadow-md fixed top-0 left-0 w-full z-50">
-      <div className="flex flex-col max-w-screen-xl mx-auto px-6">
+      <div className="flex flex-col max-w-screen-xl mx-auto max-sm:px-6">
         <div className="flex items-center justify-between sm:mb-4">
           <div className="flex-1 max-md:hidden">
           <Search />
@@ -22,7 +22,7 @@ async function Navbar() {
           </div>
           <NavButton user={user} />
         </div>
-        <div className="flex items-center justify-center max-sm:hidde">
+        <div className="flex items-center justify-center max-sm:hidden">
           <nav>
             <NavLink />
           </nav>
