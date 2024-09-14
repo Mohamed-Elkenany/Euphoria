@@ -36,7 +36,7 @@ function NavLink() {
         },
     ];
     return (
-        <ul className='flex items-center gap-8 font-medium text-lg text-colorGrayThree'>
+        <ul className='flex items-center max-sm:justify-center max-sm:flex-col gap-8 font-medium max-sm:text-base text-lg text-colorGrayThree'>
             {
                 navLink.map((link, i) => (
                     <li key={i}>

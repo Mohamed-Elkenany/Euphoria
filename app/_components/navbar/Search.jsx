@@ -44,28 +44,28 @@ function Search() {
   }, [setSearch, search, allProducts]);
 
   return (
-    <div className="search max-md:hidden flex-1">
+    <div className="search w-full">
       <div
         htmlFor="search"
-        className="relative border-b flex items-center w-2/3"
+        className="relative border-b flex items-center md:w-2/3"
       >
         <input
           type="text"
           name="searchInput"
           id="sreach"
-          className="outline-none w-full"
+          className="outline-none max-sm:placeholder:text-sm max-sm:text-lg w-full"
           placeholder="What are you looking for?"
           onChange={(e) => {
             setSearch(e.target.value);
           }}
         />
-        <button className="text-colorGrayTwo text-2xl flex items-center justify-center hover:bg-colorPink hover:text-colorGrayFive rounded-full p-2 duration-75">
+        <button className="text-colorGrayTwo max-sm:text-lg sm:text-2xl flex items-center justify-center hover:bg-colorPink hover:text-colorGrayFive rounded-full p-2 duration-75">
           <IoSearchOutline className="bg-transparent" />
         </button>
         <div
           className={`absolute ${
             !openSearch ? "hidden" : "block max-h-[300px]"
-          } bg-colorGrayFive shadow-md w-full top-[50px] p-2 rounded-md overflow-y-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-colorGrayOne`}
+          } bg-colorGrayFive grid max-sm:grid-cols-1 shadow-md max-sm:w-screen max-md:px-6 -left-6 sm:w-full max-sm:top-[35px] sm:top-[50px] p-2 rounded-md overflow-y-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-colorGrayOne`}
         >
           {allProduct.length ? (
             allProduct.map((product, i) => (
@@ -93,7 +93,7 @@ function Search() {
                   />
                 </div>
                 <div className="flex flex-col items-start">
-                  <span className="text-xs font-bold text-start text-colorGrayOne text-nowrap truncate w-[120px]">
+                  <span className="text-xs font-bold text-start text-colorGrayOne text-nowrap truncate max-sm:w-[200px] w-[120px]">
                     {product.attributes.productName}
                   </span>
                   <span className="text-xs text-colorGrayThree font-medium my-2">

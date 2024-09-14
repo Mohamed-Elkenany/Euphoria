@@ -5,6 +5,8 @@ import { CiHeart } from "react-icons/ci";
 import { GoPerson } from "react-icons/go";
 import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { IoMdMenu } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import {
   cartFun,
   cartIdFun,
@@ -15,11 +17,16 @@ import {
 import { usePathname } from "next/navigation";
 import { useGetUserByIdMutation } from "@/app/_utitly/RTKQAPI/appApi";
 import { customWishlsitAfterLogIn } from "@/app/_libs/services/customWishlist";
+import NavLink from "./NavLink";
 function NavButton({ user }) {
   const userinfo = useSelector((state) => state.rootReducer.userSlice);
-  console.log(userinfo);
   const pathname = usePathname();
   const [userInfoFun] = useGetUserByIdMutation();
+  const [openMenu, setOpenMenu] = useState(false);
+  const handleMenu = () => {
+    setOpenMenu(!openMenu);
+    handleOpenMenu(openMenu);
+  };
   const arrayOfPathname = pathname.split("/");
   const dispatch = useDispatch();
   useEffect(() => {
@@ -65,43 +72,67 @@ function NavButton({ user }) {
   return (
     <div className="flex-1">
       {user?.data === null ? (
-        <div className="flex items-center justify-end gap-2 max-lg:hidden">
-          <div
-            className={`relative ${
+        <div className="flex items-center justify-end gap-2">
+          <Link href={"/my_account/wishlist"}>
+            <button
+              className={`relative ${
+                arrayOfPathname[arrayOfPathname.length - 1] === "wishlist"
+                  ? "bg-colorPink text-colo text-white"
+                  : "bg-colorGrayFour text-colorGrayTwo"
+              } flex items-center justify-center p-2  rounded-lg text-xl md:text-2xl`}
+            >
+              <CiHeart className="bg-transparent" />
+              {userinfo?.wishlist?.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-colorGrayTwo text-colorGrayFive w-4 h-4 rounded-md text-xs text-center">
+                  {userinfo.wishlist.length}
+                </span>
+              )}
+            </button>
+          </Link>
+          <button
+            onClick={() => setOpenMenu(!openMenu)}
+            className={`relative sm:hidden ${
               arrayOfPathname[arrayOfPathname.length - 1] === "wishlist"
                 ? "bg-colorPink text-colo text-white"
                 : "bg-colorGrayFour text-colorGrayTwo"
-            } flex items-center justify-center p-2  rounded-lg text-2xl`}
+            } flex items-center justify-center p-2  rounded-lg text-xl md:text-2xl`}
           >
-            <CiHeart className="bg-transparent" />
+            {openMenu ? <IoMdClose /> : <IoMdMenu />}
             {userinfo?.wishlist?.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-colorGrayTwo text-colorGrayFive w-4 h-4 rounded-md text-xs text-center">
                 {userinfo.wishlist.length}
               </span>
             )}
-          </div>
+          </button>
           <Link href={"/auth/signin"}>
             <button
               className="bg-colorPink
-                                   px-4
+                                  max-md:text-sm
+                                    px-3
                                     py-2
+                                    md:px-4
+                                    md:py-2
+                                    md:font-medium 
                                      rounded-lg
                                       text-colorGrayFive
-                                       font-medium 
                                           duration-100
                                           "
             >
               SignIn
             </button>
           </Link>
-          <Link href={"/auth/signup"}>
+          <Link href={"/auth/signup"} className="max-sm:hidden">
             <button
               className="
                                     outline
                                      outline-colorPink
                                       outline-1
-                                    px-4
-                                     py-2
+                                    max-md:text-sm
+                                    px-3
+                                    py-2
+                                    md:px-4
+                                    md:py-2
+                                    md:font-medium
                                       rounded-lg
                                        text-colorPink
                                         font-medium
@@ -154,14 +185,21 @@ function NavButton({ user }) {
               {(userinfo?.cart?.productDetails?.length > 0 ||
                 userinfo?.cart?.length > 0) && (
                 <span className="absolute -top-2 -right-2 bg-colorGrayTwo text-colorGrayFive w-4 h-4 rounded-md text-xs text-center">
-                    {userinfo.cart?.productDetails?.length}
-                    {userinfo?.cart?.length}
+                  {userinfo.cart?.productDetails?.length}
+                  {userinfo?.cart?.length}
                 </span>
               )}
             </button>
           </Link>
         </div>
       )}
+      <div
+        className={`absolute sm:hidden ${
+          !openMenu ? "-left-[500px]" : "left-0"
+        } top-[53px] bg-colorGrayFive w-full pt-12 shadow-lg h-screen duration-500`}
+      >
+        <NavLink />
+      </div>
     </div>
   );
 }
