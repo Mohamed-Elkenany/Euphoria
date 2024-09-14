@@ -15,8 +15,8 @@ export default async function RootLayout({ children }) {
       <body className={`${noto_serif.className} `}>
         <Providers>
           <Navbar />
-          {/* {children} */}
-          {/* <Footer /> */}
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>
